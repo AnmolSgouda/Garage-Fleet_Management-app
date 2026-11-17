@@ -1,0 +1,8 @@
+{
+  "name": "Fleet Service Planning & Garage Management System",
+  "description": "Enterprise fleet service planning dashboard with 4-stage workflow columns, weekly time-slot calendar, 6 vehicle categories, vehicle profile slide-over, and 6-step service booking wizard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
