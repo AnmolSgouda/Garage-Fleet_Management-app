@@ -7,31 +7,25 @@ Full-stack **Angular 19 + TypeScript** and **Node.js / Express + TypeScript** co
 ## Project Architecture
 
 ```
-├── frontend/                   # Standalone Angular 19 + Tailwind CSS v4 SPA (Vercel-ready)
+├── frontend/                   # Angular 19 + Tailwind CSS frontend
 │   ├── angular.json
 │   ├── package.json
-│   ├── vercel.json             # SPA rewrites + optional /api proxy
-│   ├── proxy.conf.json         # Local dev proxy (/api -> http://localhost:3000)
-│   ├── public/assets/vehicles/ # Commercial vehicle PNG renders
 │   └── src/
-│       ├── environments/       # environment.ts / environment.prod.ts (API base URL)
+│       ├── environments/       # API base URL configuration
 │       └── app/
 │           ├── models/         # Shared TypeScript interfaces
-│           ├── services/       # FleetApiService (Angular Signals + HttpClient) & FirebaseClientService
-│           └── components/     # 18 standalone Angular components
-├── backend/                    # Standalone Node.js + Express + TypeScript REST API
-│   ├── database/schema.sql     # Complete PostgreSQL DDL schema for external PostgreSQL hosting
-│   ├── tsconfig.json
-│   ├── .env.example
-│   └── src/
-│       ├── config/             # Firebase Admin & DB initialization
-│       ├── data/               # Initial commercial fleet, inventory, supplier & template seed data
-│       ├── routes/             # Express REST endpoints (/api/*)
-│       ├── services/           # Transactional garage workflows & persistence
-│       └── types/              # Backend TypeScript domain models
-├── server.ts                   # Single-port (3000) Node/Express entrypoint serving /api + Angular dist
-├── firestore.rules             # Firestore security rules
-├── firebase-blueprint.json     # Firestore collection schema blueprint
+│           ├── services/       # FleetApiService (Angular Signals + HttpClient)
+│           └── components/     # Angular components
+├── backend/                    # Node.js + Express + TypeScript REST API
+│   ├── src/
+│   │   ├── db/                 # PostgreSQL schema and database connection
+│   │   ├── config/             # Backend configuration
+│   │   ├── data/               # Initial seed data
+│   │   ├── routes/             # Express REST endpoints
+│   │   ├── services/           # Garage workflows and database operations
+│   │   └── types/              # Backend TypeScript models
+│   └── tsconfig.json
+├── server.ts                   # Express application entrypoint
 └── package.json                # Unified workspace scripts
 ```
 
@@ -124,4 +118,4 @@ cd frontend && npx ng serve --proxy-config proxy.conf.json
 ### 2. Backend Hosting (`/backend` or root Express server)
 1. Deploy the Express server (`server.ts` / `backend/`) on Render, Railway, Cloud Run, or Fly.io with `PORT` and `CORS_ORIGIN` configured from `.env.example`.
 2. **PostgreSQL Setup (External Hosting)**: Run `backend/database/schema.sql` against your PostgreSQL database instance and set `DATABASE_URL`.
-3. **Firestore Persistence**: Automatically connects via Firebase Admin / `firebase-applet-config.json` when running in a Firebase-configured environment.
+3. **PostgreSQL Persistence**: The Express backend connects to PostgreSQL using the DATABASE_URL environment variable. Database tables and relationships are defined in backend/src/db/schema.sql.
